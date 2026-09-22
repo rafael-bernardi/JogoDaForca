@@ -1,4 +1,4 @@
-package JogoDaForca;
+package jogoDaForca;
 
 import java.util.Scanner;   
 import java.util.Random;
@@ -19,11 +19,15 @@ public class Main {
             palavraOculta[i] = '_';
         }
 
-        System.out.println("===Jogo da Forca===");
-
+        int erros = 0;
+        final int MAX_ERROS = 5;
         boolean acertou = false;
 
-        while(!acertou){
+        System.out.println("=== JOGO DA FORCA ===");
+
+        while(!acertou && erros < MAX_ERROS){
+            desenharForca(erros);
+
             System.out.print("\nPalavra: ");
             for (char letra : palavraOculta){
                 System.out.print(letra + " "); 
@@ -43,8 +47,9 @@ public class Main {
 
             if(letraEncontrada){
                 System.out.println("Bom chute! A letra '" + chute + "' existe na palavra."); 
-            }else{
-                System.out.println("Que pena, a letra '" + chute + "' não existe na palavra."); 
+            } else {
+                erros++;
+                System.out.println("Que pena, a letra '" + chute + "' nao existe. Erros: " + erros + "/" + MAX_ERROS); 
             }
 
             boolean temTraco = false;
@@ -57,9 +62,57 @@ public class Main {
 
             if(!temTraco){
                 acertou = true;
-                System.out.println("\nParabéns! Você conseguiu acertar a palavra: " + palavraSecreta);
             }
         }
+
+        System.out.println("\n========================");
+        if(acertou){
+            System.out.println("PARABENS! Voce venceu! A palavra era: " + palavraSecreta);
+        } else {
+            desenharForca(erros);
+            System.out.println("GAME OVER! Voce atingiu o numero maximo de 5 erros.");
+            System.out.println("A palavra secreta era: " + palavraSecreta);
+        }
+        System.out.println("===========================");
         input.close();
+    }
+
+    public static void desenharForca(int erros){
+        System.out.println("\n +---+");
+        System.out.println("  |   |");
+
+        switch (erros) {
+            case 0:
+                System.out.println("      |");
+                System.out.println("      |");
+                System.out.println("      |");
+                break;
+            case 1:
+                System.out.println("  O   |");
+                System.out.println("      |");
+                System.out.println("      |");
+                break;
+            case 2:
+                System.out.println("  O   |");
+                System.out.println("  |   |");
+                System.out.println("      |");
+                break;
+            case 3:
+                System.out.println("  O   |");
+                System.out.println(" /|   |");
+                System.out.println("      |");
+                break;
+            case 4:
+                System.out.println("  O   |");
+                System.out.println(" /|\\  |");
+                System.out.println("      |");
+                break;
+            case 5:
+                System.out.println("  O   |");
+                System.out.println(" /|\\  |");
+                System.out.println(" / \\  |");
+                break;                    
+        }
+        System.out.println("=========");
     }
 }
