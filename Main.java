@@ -1,7 +1,8 @@
-package jogoDaForca;
+package JogoDaForca;
 
 import java.util.Scanner;   
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -19,6 +20,8 @@ public class Main {
             palavraOculta[i] = '_';
         }
 
+        ArrayList<Character> letrasTentadas = new ArrayList<>();
+
         int erros = 0;
         final int MAX_ERROS = 5;
         boolean acertou = false;
@@ -34,8 +37,17 @@ public class Main {
             }
             System.out.println();
 
+            System.out.println("Letras tentadas: " + letrasTentadas);
+
             System.out.print("Qual o seu chute? ");
             char chute = input.nextLine().toUpperCase().charAt(0); 
+
+            if(letrasTentadas.contains(chute)){
+                System.out.println("-- Você já tentou a letra: '" +  chute + "'. Tente outra Letra. ");
+                continue;
+            }
+
+            letrasTentadas.add(chute);
 
             boolean letraEncontrada = false;
             for(int i = 0; i < palavraSecreta.length(); i++){
