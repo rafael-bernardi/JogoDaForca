@@ -11,9 +11,52 @@ public class Main {
         Random aleatorio = new Random();
 
         String[] frutas = {"ABACATE", "GOIABA", "BANANA", "UVA", "MANGA"};
+        String[] paises = {"BRASIL", "ARGENTINA", "CHILE", "COLOMBIA", "PERU"};
+        String[] animais = {"CACHORRO", "GATO", "PORCO", "VACA", "CAVALO", "OVELHA"};
+        String[] cores = {"VERMELHO", "AZUL", "AMARELO", "VERDE", "ROXO", "LARANJA"};
 
-        int indiceSorteado = aleatorio.nextInt(frutas.length);
-        String palavraSecreta = frutas[indiceSorteado];
+        System.out.println("=== JOGO DA FORCA ===");
+        System.out.println("Escolha uma categoria:");
+        System.out.println("1 - Frutas");
+        System.out.println("2 - Países");
+        System.out.println("3 - Animais");
+        System.out.println("4 - Cores");
+        System.out.println("Opção: ");
+
+        int opcao = 0;
+        String[] categoriaEscolhida = null;
+        String nomeCategoria = "";
+
+        while(categoriaEscolhida == null){
+            if(input.hasNextInt()){
+                opcao = input.nextInt();
+                input.nextLine(); 
+
+                switch(opcao){
+                    case 1:
+                        categoriaEscolhida = frutas;
+                        nomeCategoria = "Frutas";
+                        break;
+                    case 2:
+                        categoriaEscolhida = paises;
+                        nomeCategoria = "Países";
+                        break;
+                    case 3:
+                        categoriaEscolhida = animais;
+                        nomeCategoria = "Animais";
+                        break;
+                    case 4:
+                        categoriaEscolhida = cores;
+                        nomeCategoria = "Cores";
+                        break;
+                    default:
+                        System.out.println("Opção inválida. Escolha novamente: ");
+                }
+            }
+        }
+
+        int indiceSorteado = aleatorio.nextInt(categoriaEscolhida.length);
+        String palavraSecreta = categoriaEscolhida[indiceSorteado];
 
         char[] palavraOculta = new char[palavraSecreta.length()];
         for(int i = 0; i < palavraOculta.length; i++){
@@ -26,7 +69,7 @@ public class Main {
         final int MAX_ERROS = 5;
         boolean acertou = false;
 
-        System.out.println("=== JOGO DA FORCA ===");
+        
 
         while(!acertou && erros < MAX_ERROS){
             desenharForca(erros);
@@ -40,7 +83,14 @@ public class Main {
             System.out.println("Letras tentadas: " + letrasTentadas);
 
             System.out.print("Qual o seu chute? ");
-            char chute = input.nextLine().toUpperCase().charAt(0); 
+            String entrada = input.nextLine().trim().toUpperCase();
+
+            if(entrada.isEmpty()){
+                System.out.println("Entrada inválida. Por favor, digite uma letra.");
+                continue;
+            }
+
+            char chute = entrada.charAt(0);
 
             if(letrasTentadas.contains(chute)){
                 System.out.println("-- Você já tentou a letra: '" +  chute + "'. Tente outra Letra. ");
